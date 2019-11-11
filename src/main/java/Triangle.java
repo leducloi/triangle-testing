@@ -12,10 +12,10 @@ public class Triangle {
         this.side_b = side_2;
         this.side_c = side_3;
         this.tri_type = new ArrayList<String>();
-        this.valid_tri = valid_triangle(side_a, side_b, side_c);
+        this.valid_tri = valid_triangle();
     }
 
-    public boolean valid_triangle(double side_a, double side_b, double side_c){
+    public boolean valid_triangle(){
         if (side_a <= 0 || side_b <= 0 || side_c <= 0){
             return false;
         }
@@ -26,7 +26,7 @@ public class Triangle {
         return true;
     }
 
-    public void equal_iso (double side_a, double side_b, double side_c){
+    public void equal_iso (){
         final double THRESHOLD = .01;
         if ( (Math.abs(side_a - side_b) < THRESHOLD) && (Math.abs(side_a - side_c) < THRESHOLD) ){
             tri_type.add("Equilateral");
@@ -39,7 +39,7 @@ public class Triangle {
         }
     }
 
-    public void right(double side_a, double side_b, double side_c){
+    public void right(){
         final double THRESHOLD = .01;
         double angle_a, angle_b, angle_c;
         double side_as, side_bs, side_cs;
@@ -60,8 +60,8 @@ public class Triangle {
             System.out.println("Invalid Triangle");
         } 
         else{
-            equal_iso(side_a, side_b, side_c);
-            right(side_a, side_b, side_c);
+            equal_iso();
+            right();
             int n = tri_type.size();
             System.out.printf("Triangle's Types: ");
             for (int i = 0; i < n ; i++){

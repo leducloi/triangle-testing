@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Triangle.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">triangle</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">Triangle.java</span></div><h1>Triangle.java</h1><pre class="source lang-java linenums">import java.util.*;
+import java.math.*;
+
+public class Triangle {
+
+    double side_a, side_b, side_c, area;
+    boolean valid_tri;
+    List&lt;String&gt; tri_type;
+
+<span class="fc" id="L10">    Triangle(double side_1, double side_2, double side_3){</span>
+<span class="fc" id="L11">        this.side_a = side_1;</span>
+<span class="fc" id="L12">        this.side_b = side_2;</span>
+<span class="fc" id="L13">        this.side_c = side_3;</span>
+<span class="fc" id="L14">        this.tri_type = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L15">        this.valid_tri = valid_triangle();</span>
+<span class="fc" id="L16">    }</span>
+
+    public boolean valid_triangle(){
+<span class="fc bfc" id="L19" title="All 6 branches covered.">        if (side_a &lt;= 0 || side_b &lt;= 0 || side_c &lt;= 0){</span>
+<span class="fc" id="L20">            return false;</span>
+        }
+
+<span class="fc bfc" id="L23" title="All 6 branches covered.">        if ( ((side_a + side_b) &lt;= side_c) || ((side_a + side_c) &lt;= side_b) || ((side_b + side_c) &lt;= side_a) ){</span>
+<span class="fc" id="L24">            return false;</span>
+        }
+<span class="fc" id="L26">        return true;</span>
+    }
+
+    public void equal_iso (){
+<span class="fc" id="L30">        final double THRESHOLD = .01;</span>
+<span class="fc bfc" id="L31" title="All 4 branches covered.">        if ( (Math.abs(side_a - side_b) &lt; THRESHOLD) &amp;&amp; (Math.abs(side_a - side_c) &lt; THRESHOLD) ){</span>
+<span class="fc" id="L32">            tri_type.add(&quot;Equilateral&quot;);</span>
+        }
+<span class="fc bfc" id="L34" title="All 6 branches covered.">        else if ( (Math.abs(side_a - side_b) &lt; THRESHOLD) || (Math.abs(side_a - side_c) &lt; THRESHOLD) || (Math.abs(side_b-side_c) &lt; THRESHOLD) ){</span>
+<span class="fc" id="L35">            tri_type.add(&quot;Isosceles&quot;);</span>
+        }
+        else{
+<span class="fc" id="L38">            tri_type.add(&quot;Scalene&quot;);</span>
+        }
+<span class="fc" id="L40">    }</span>
+
+    public void right(){
+<span class="fc" id="L43">        final double THRESHOLD = .01;</span>
+        double angle_a, angle_b, angle_c;
+        double side_as, side_bs, side_cs;
+<span class="fc" id="L46">        side_as = Math.pow(side_a, 2);</span>
+<span class="fc" id="L47">        side_bs = Math.pow(side_b, 2);</span>
+<span class="fc" id="L48">        side_cs = Math.pow(side_c, 2);</span>
+<span class="fc" id="L49">        angle_a = side_bs + side_cs;</span>
+<span class="fc" id="L50">        angle_b = side_as + side_cs;</span>
+<span class="fc" id="L51">        angle_c = side_as + side_bs;</span>
+
+<span class="fc bfc" id="L53" title="All 6 branches covered.">        if ( (Math.abs(angle_a - side_as) &lt; THRESHOLD) || (Math.abs(angle_b - side_bs) &lt; THRESHOLD) || (Math.abs(angle_c - side_cs) &lt; THRESHOLD) ){</span>
+<span class="fc" id="L54">            tri_type.add(&quot;Right&quot;);</span>
+        }
+<span class="fc" id="L56">    }</span>
+
+    public void getType(){
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        if (valid_tri == false){</span>
+<span class="fc" id="L60">            System.out.println(&quot;Invalid Triangle&quot;);</span>
+        } 
+        else{
+<span class="fc" id="L63">            equal_iso();</span>
+<span class="fc" id="L64">            right();</span>
+<span class="fc" id="L65">            int n = tri_type.size();</span>
+<span class="fc" id="L66">            System.out.printf(&quot;Triangle's Types: &quot;);</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">            for (int i = 0; i &lt; n ; i++){</span>
+<span class="fc" id="L68">                System.out.printf(tri_type.get(i) + &quot; | &quot;);</span>
+            }
+        }
+<span class="fc" id="L71">    }</span>
+
+    public void getArea(){
+<span class="fc bfc" id="L74" title="All 2 branches covered.">        if (valid_tri == true){</span>
+            double sp, area_s;
+<span class="fc" id="L76">            sp = (side_a + side_b + side_c);</span>
+<span class="fc" id="L77">            area_s = sp*(sp - side_a)*(sp - side_b)*(sp-side_c);</span>
+<span class="fc" id="L78">            this.area = Math.sqrt(area_s);</span>
+<span class="fc" id="L79">            System.out.println(&quot;\nThe Area is: &quot; + area);</span>
+        }
+<span class="fc" id="L81">    }</span>
+
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
